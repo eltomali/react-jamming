@@ -3,21 +3,13 @@ import React, {Component} from 'react';
 import './Track.css';
 
 class Track extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      sign: '-'
-    }
-    this.renderAction = this.renderAction.bind(this);
-  }
   renderAction() {
-    if(this.props.isRemoval === "true"){
+    if(this.props.isRemoval){
       console.log("It is true");
-      return this.setState({sign: '-'})
-    } 
-    if(this.props.isRemoval === "false") {
+      return <button className="Track-action">-</button>
+    } else {
       console.log("It is true");
-      return this.setState({sign: '+'})
+      return <button className="Track-action">+</button>
     }
   }
   render() {
@@ -25,13 +17,13 @@ class Track extends Component {
     <div className="Track">
       <div className="Track-information">
         <h3>
-          {/* <!-- track name will go here --> */}
+          {this.props.track.name}
         </h3>
         <p>
-          {/* <!-- track artist will go here--> | <!-- track album will go here --> */}
+          {this.props.track.artist} | {this.props.track.album}
         </p>
       </div>
-      <button className="Track-action">{this.state.sign}</button>
+      {this.renderAction()}
     </div>
     );
   }
