@@ -1,8 +1,11 @@
 const clientId = process.env.ClientId;
 const redirectURI = 'http://localhost:3000/';
+
+
 const accessToken;
 Spotify = {
   getAccessToken() {
+    checkClientId()
     //first condition
     if(accessToken){
       return accessToken;
@@ -18,10 +21,18 @@ Spotify = {
       window.setTimeout( () => accessToken = '', expiresIn * 1000);
       window.history.pushState( 'Access Token', null, '/' );
     } else {
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${clientSecret}`;
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
       window.location = accessUrl;
     }
-    
+  }
+}
+
+// error handling if no clientId
+const checkClientId = () => {
+  if(process.env.ClientId === undefined) {
+    console.error('No ClientId Key\nAdd `ClientId=<KEY>` in `.env` file');
+    alert('No ClientId Key\nAdd `ClientId=<KEY>` in `.env` file');
+  }
 }
 
 export default Spotify; 
